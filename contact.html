@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>✉️ Say Hi to Callan | Callan's Big World</title>
+  <meta name="description" content="Send Callan a hello, an RSVP, or your favorite truck. We love mail!" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Baloo+2:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="blob">🚚</span><span>Callan's Big World <small>Balls · Trucks · Big Machines</small></span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">🍔</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">🏠 Home</a></li>
+      <li><a href="photos.html">📸 Photos</a></li>
+      <li><a href="videos.html">🎬 Videos</a></li>
+      <li><a href="events.html">📅 Events</a></li>
+      <li><a href="blog.html">📰 Blog</a></li>
+      <li><a href="contact.html" class="active">✉️ Say Hi</a></li>
+    </ul>
+  </div>
+</header>
+<div class="tape"></div>
+
+<section class="wrap">
+  <div class="page-head">
+    <div class="emoji">✉️</div>
+    <h1>Say Hi to Callan!</h1>
+    <p>Send a hello, an RSVP, or a picture of a really big truck.</p>
+  </div>
+
+  <div class="contact-grid">
+    <!-- Form -->
+    <div class="contact-card">
+      <h3>📬 Send a Message</h3>
+      <form id="hiForm">
+        <div class="field">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" placeholder="Grandma, Uncle Joe, a truck fan…" required />
+        </div>
+        <div class="field">
+          <label for="email">Your Email</label>
+          <input type="email" id="email" placeholder="you@email.com" required />
+        </div>
+        <div class="field">
+          <label for="topic">What's up?</label>
+          <select id="topic">
+            <option>Just saying hi! 👋</option>
+            <option>RSVP to an event 🎉</option>
+            <option>Sharing a photo or video 📸</option>
+            <option>I saw a cool truck 🚚</option>
+            <option>Something else</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="message">Your Message</label>
+          <textarea id="message" placeholder="Tell Callan something fun…" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-red">🚀 Send It!</button>
+        <p id="formNote" style="font-weight:600; margin-top:.9rem; min-height:1.4em;"></p>
+      </form>
+    </div>
+
+    <!-- Fun info -->
+    <div class="contact-card">
+      <h3>🌟 Other Ways to Reach Us</h3>
+      <ul class="contact-fun">
+        <li><span class="ic">✉️</span> <span><strong>Email:</strong><br>hello@callansbigworld.com</span></li>
+        <li><span class="ic">📸</span> <span><strong>Share photos:</strong><br>Pop them on the <a href="photos.html" style="color:var(--red);font-weight:700;">Photo Gallery</a></span></li>
+        <li><span class="ic">🎬</span> <span><strong>Share videos:</strong><br>Add them on the <a href="videos.html" style="color:var(--red);font-weight:700;">Video Gallery</a></span></li>
+        <li><span class="ic">📅</span> <span><strong>Come hang out:</strong><br>See the <a href="events.html" style="color:var(--red);font-weight:700;">Events</a> page</span></li>
+      </ul>
+      <div style="background:#FFF0C9;border:4px solid var(--ink);border-radius:18px;padding:1rem 1.2rem;font-weight:600;">
+        🕐 <strong>Best time to reach Callan:</strong> after his nap and before his next snack. (It's a small window. Move fast.) 🍌
+      </div>
+    </div>
+  </div>
+  <div style="height:3rem;"></div>
+</section>
+
+<footer class="site-foot">
+  <div class="big">🚚 ⚽ 🏗️</div>
+  <strong style="font-size:1.4rem;">Callan's Big World</strong>
+  <div class="foot-links"><a href="index.html">Home</a><a href="photos.html">Photos</a><a href="videos.html">Videos</a><a href="events.html">Events</a><a href="blog.html">Blog</a><a href="contact.html">Say Hi</a></div>
+  <small>Made with 💛 for our favorite little builder. Vroom vroom!</small>
+</footer>
+
+<script src="script.js"></script>
+<script>
+/* Contact form -> opens the visitor's email app addressed to Callan's grown-ups.
+   Replace hello@callansbigworld.com with your real email address. */
+(function () {
+  var form = document.getElementById('hiForm');
+  var note = document.getElementById('formNote');
+  var TO = 'hello@callansbigworld.com';
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('name').value.trim();
+    var email = document.getElementById('email').value.trim();
+    var topic = document.getElementById('topic').value;
+    var message = document.getElementById('message').value.trim();
+    if (!name || !email || !message) { note.style.color = '#FF5A5F'; note.textContent = 'Oops! Please fill in your name, email and message. 🙂'; return; }
+    var subject = encodeURIComponent('Hi from ' + name + ' — ' + topic);
+    var body = encodeURIComponent('From: ' + name + ' (' + email + ')\nTopic: ' + topic + '\n\n' + message + '\n\n— Sent from Callan\'s Big World 🚚');
+    window.location.href = 'mailto:' + TO + '?subject=' + subject + '&body=' + body;
+    note.style.color = '#57CC99'; note.textContent = 'Yay! Your email app is opening — hit send and we\'ll get it! 💛';
+    form.reset();
+  });
+})();
+</script>
+</body>
+</html>

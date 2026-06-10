@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📸 Callan's Photo Gallery | Callan's Big World</title>
+  <meta name="description" content="Photos of Callan with his balls, trucks and big machines — sorted into fun boxes!" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Baloo+2:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .cat-box { background: var(--white); border: 5px solid var(--ink); border-radius: var(--radius); box-shadow: var(--shadow-lg); padding: 1.4rem 1.4rem 1.8rem; margin-bottom: 2rem; }
+    .cat-box > h2 { text-align: left; display: flex; align-items: center; gap: .6rem; font-size: 1.8rem; margin-bottom: 1rem; }
+    .cat-box.balls   { background: #FFF0C9; }
+    .cat-box.trucks  { background: #FFE0E1; }
+    .cat-box.machines{ background: #D7F4EE; }
+    .cat-box.more    { background: #EBE0FF; }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="blob">🚚</span><span>Callan's Big World <small>Balls · Trucks · Big Machines</small></span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">🍔</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">🏠 Home</a></li>
+      <li><a href="photos.html" class="active">📸 Photos</a></li>
+      <li><a href="videos.html">🎬 Videos</a></li>
+      <li><a href="events.html">📅 Events</a></li>
+      <li><a href="blog.html">📰 Blog</a></li>
+      <li><a href="contact.html">✉️ Say Hi</a></li>
+    </ul>
+  </div>
+</header>
+<div class="tape"></div>
+
+<section class="wrap">
+  <div class="page-head">
+    <div class="emoji">📸</div>
+    <h1>Callan's Photo Gallery</h1>
+    <p>Sorted into fun boxes: balls, trucks, big machines &amp; more!</p>
+  </div>
+
+  <!-- Uploader -->
+  <div class="uploader">
+    <h3>📤 Add Your Photos!</h3>
+    <p>Pick a box, then add a great pic of Callan (or his favorite digger)!</p>
+    <div class="url-row">
+      <select id="photoCat">
+        <option value="more" selected>✨ My Awesome Photos</option>
+        <option value="balls">⚽ Balls</option>
+        <option value="trucks">🚚 Trucks</option>
+        <option value="machines">🏗️ Big Machines</option>
+      </select>
+      <label class="btn btn-blue file-label">🖼️ Choose Photos<input type="file" id="photoInput" accept="image/*" multiple /></label>
+    </div>
+    <span class="hint">Photos are saved right here in your browser. To pull them automatically from Dropbox every day, see <strong>DROPBOX-SETUP.md</strong>.</span>
+  </div>
+
+  <!-- Category boxes -->
+  <div class="cat-box more"><h2>✨ My Awesome Photos</h2><div class="gallery" data-cat="more">
+    <div class="tile"><div style="height:200px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:4.5rem;">🍌</div><div class="cap">Snack break</div></div>
+  </div></div>
+
+  <div class="cat-box balls"><h2>⚽ Balls</h2><div class="gallery" data-cat="balls">
+    <div class="tile"><div style="height:200px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:4.5rem;">⚽</div><div class="cap">Ball time!</div></div>
+    <div class="tile"><div style="height:200px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:4.5rem;">🏀</div><div class="cap">Slam dunk (sort of)</div></div>
+  </div></div>
+
+  <div class="cat-box trucks"><h2>🚚 Trucks</h2><div class="gallery" data-cat="trucks">
+    <div class="tile"><div style="height:200px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:4.5rem;">🚚</div><div class="cap">Big yellow dump truck</div></div>
+    <div class="tile"><div style="height:200px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:4.5rem;">🚒</div><div class="cap">Fire truck!</div></div>
+  </div></div>
+
+  <div class="cat-box machines"><h2>🏗️ Big Machines</h2><div class="gallery" data-cat="machines">
+    <div class="tile"><div style="height:200px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:4.5rem;">🏗️</div><div class="cap">WHAAATTT</div></div>
+    <div class="tile"><img src="images/front-loader.jpg" alt="Front loader" loading="lazy" style="height:200px;width:100%;object-fit:cover;display:block;" /><div class="cap">Dig Digs</div></div>
+  </div></div>
+
+  <div style="height:2rem;"></div>
+</section>
+
+<footer class="site-foot">
+  <div class="big">🚚 ⚽ 🏗️</div>
+  <strong style="font-size:1.4rem;">Callan's Big World</strong>
+  <div class="foot-links"><a href="index.html">Home</a><a href="photos.html">Photos</a><a href="videos.html">Videos</a><a href="events.html">Events</a><a href="blog.html">Blog</a><a href="contact.html">Say Hi</a></div>
+  <small>Made with 💛 for our favorite little builder. Vroom vroom!</small>
+</footer>
+
+<script src="script.js"></script>
+<script>
+(function () {
+  var KEY = 'callanPhotos';
+  var input = document.getElementById('photoInput');
+  var catSel = document.getElementById('photoCat');
+  function grid(cat) { return document.querySelector('.gallery[data-cat="' + cat + '"]'); }
+  function load() { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { return []; } }
+  function save(a) { try { localStorage.setItem(KEY, JSON.stringify(a)); } catch (e) { alert('Whoops! Your browser is full of photos. Remove a few. 🧹'); } }
+  function validCat(c) { return ['balls','trucks','machines','more'].indexOf(c) >= 0 ? c : 'more'; }
+
+  function makeTile(item, idx) {
+    var d = document.createElement('div');
+    d.className = 'tile user';
+    d.innerHTML = '<img src="' + item.src + '" alt="' + (item.cap || 'Callan photo') + '" />' +
+                  '<button class="del" data-i="' + idx + '" title="Remove">✕</button>' +
+                  '<div class="cap">' + (item.cap || 'Callan adventure') + '</div>';
+    return d;
+  }
+
+  function render() {
+    document.querySelectorAll('.tile.user').forEach(function (el) { el.remove(); });
+    load().forEach(function (item, i) {
+      var g = grid(validCat(item.cat));
+      if (g) g.insertBefore(makeTile(item, i), g.firstChild);
+    });
+  }
+
+  // Optional Dropbox manifest (photos.json) — populated by the daily sync. Loads only when hosted online.
+  fetch('photos.json', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : []; }).then(function (list) {
+    (list || []).forEach(function (item) {
+      var g = grid(validCat(item.category || item.cat));
+      if (!g) return;
+      var d = document.createElement('div');
+      d.className = 'tile';
+      d.innerHTML = '<img src="' + item.url + '" alt="' + (item.caption || 'Callan photo') + '" loading="lazy" onerror="this.parentNode.remove()" /><div class="cap">' + (item.caption || 'From Dropbox') + '</div>';
+      g.appendChild(d);
+    });
+  }).catch(function () {});
+
+  input.addEventListener('change', function () {
+    var files = Array.prototype.slice.call(input.files);
+    var cat = validCat(catSel.value);
+    var photos = load(); var pending = files.length; if (!pending) return;
+    files.forEach(function (file) {
+      if (!/^image\//.test(file.type)) { pending--; return; }
+      var r = new FileReader();
+      r.onload = function () { photos.push({ src: r.result, cap: file.name.replace(/\.[^.]+$/, ''), cat: cat }); if (--pending === 0) { save(photos); render(); } };
+      r.readAsDataURL(file);
+    });
+    input.value = '';
+  });
+
+  document.querySelector('section.wrap').addEventListener('click', function (e) {
+    var btn = e.target.closest('.del'); if (!btn) return;
+    var photos = load(); photos.splice(parseInt(btn.getAttribute('data-i'), 10), 1); save(photos); render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

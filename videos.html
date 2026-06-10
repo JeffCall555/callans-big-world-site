@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎬 Callan's Video Gallery | Callan's Big World</title>
+  <meta name="description" content="Videos of Callan rolling trucks, bouncing balls and watching big machines — sorted into fun boxes!" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Baloo+2:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .cat-box { background: var(--white); border: 5px solid var(--ink); border-radius: var(--radius); box-shadow: var(--shadow-lg); padding: 1.4rem 1.4rem 1.8rem; margin-bottom: 2rem; }
+    .cat-box > h2 { text-align: left; display: flex; align-items: center; gap: .6rem; font-size: 1.8rem; margin-bottom: 1rem; }
+    .cat-box.balls{ background:#FFF0C9; } .cat-box.trucks{ background:#FFE0E1; }
+    .cat-box.machines{ background:#D7F4EE; } .cat-box.more{ background:#EBE0FF; }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="blob">🚚</span><span>Callan's Big World <small>Balls · Trucks · Big Machines</small></span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">🍔</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">🏠 Home</a></li>
+      <li><a href="photos.html">📸 Photos</a></li>
+      <li><a href="videos.html" class="active">🎬 Videos</a></li>
+      <li><a href="events.html">📅 Events</a></li>
+      <li><a href="blog.html">📰 Blog</a></li>
+      <li><a href="contact.html">✉️ Say Hi</a></li>
+    </ul>
+  </div>
+</header>
+<div class="tape"></div>
+
+<section class="wrap">
+  <div class="page-head">
+    <div class="emoji">🎬</div>
+    <h1>Callan's Video Gallery</h1>
+    <p>Vroom-vrooms, bounces and "uh-ohs" — sorted into fun boxes!</p>
+  </div>
+
+  <div class="uploader">
+    <h3>🎥 Add a Video!</h3>
+    <p>Pick a box, then upload a clip or paste a YouTube / video link.</p>
+    <div class="url-row">
+      <select id="videoCat">
+        <option value="more" selected>✨ My Awesome Videos</option>
+        <option value="balls">⚽ Balls</option>
+        <option value="trucks">🚚 Trucks</option>
+        <option value="machines">🏗️ Big Machines</option>
+      </select>
+      <label class="btn btn-blue file-label">📼 Choose a Video<input type="file" id="videoInput" accept="video/*" multiple /></label>
+    </div>
+    <div class="url-row">
+      <input type="url" id="videoUrl" placeholder="Paste a YouTube or video link…" />
+      <button class="btn btn-green" id="addUrl">➕ Add Link</button>
+    </div>
+    <span class="hint">Pasted links save in your browser; uploads play for this visit. To pull videos automatically from Dropbox daily, see <strong>DROPBOX-SETUP.md</strong>.</span>
+  </div>
+
+  <div class="cat-box more"><h2>✨ My Awesome Videos</h2><div class="gallery" data-cat="more">
+    <div class="tile"><div style="height:200px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:4.5rem;">🎉</div><div class="cap">Just being silly</div></div>
+  </div></div>
+  <div class="cat-box balls"><h2>⚽ Balls</h2><div class="gallery" data-cat="balls">
+    <div class="tile"><div style="height:200px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:4.5rem;">⚽🦶</div><div class="cap">Big kick!</div></div>
+  </div></div>
+  <div class="cat-box trucks"><h2>🚚 Trucks</h2><div class="gallery" data-cat="trucks">
+    <div class="tile"><div style="height:200px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:4.5rem;">🚚💨</div><div class="cap">Trucks go FAST</div></div>
+  </div></div>
+  <div class="cat-box machines"><h2>🏗️ Big Machines</h2><div class="gallery" data-cat="machines">
+    <div class="tile"><div style="height:200px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:4.5rem;">🏗️👀</div><div class="cap">Digger watch party</div></div>
+  </div></div>
+
+  <div style="height:2rem;"></div>
+</section>
+
+<footer class="site-foot">
+  <div class="big">🚚 ⚽ 🏗️</div>
+  <strong style="font-size:1.4rem;">Callan's Big World</strong>
+  <div class="foot-links"><a href="index.html">Home</a><a href="photos.html">Photos</a><a href="videos.html">Videos</a><a href="events.html">Events</a><a href="blog.html">Blog</a><a href="contact.html">Say Hi</a></div>
+  <small>Made with 💛 for our favorite little builder. Vroom vroom!</small>
+</footer>
+
+<script src="script.js"></script>
+<script>
+(function () {
+  var KEY = 'callanVideoLinks';
+  var fileInput = document.getElementById('videoInput');
+  var urlInput = document.getElementById('videoUrl');
+  var addUrl = document.getElementById('addUrl');
+  var catSel = document.getElementById('videoCat');
+  function grid(cat) { return document.querySelector('.gallery[data-cat="' + cat + '"]'); }
+  function validCat(c) { return ['balls','trucks','machines','more'].indexOf(c) >= 0 ? c : 'more'; }
+  function load() { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { return []; } }
+  function save(a) { localStorage.setItem(KEY, JSON.stringify(a)); }
+  function youTubeId(url) { var m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/); return m ? m[1] : null; }
+  function mediaHtml(url) {
+    var yt = youTubeId(url);
+    if (yt) return '<iframe width="100%" height="200" src="https://www.youtube.com/embed/' + yt + '" title="Callan video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    return '<video src="' + url + '" controls preload="metadata"></video>';
+  }
+
+  function render() {
+    document.querySelectorAll('.tile.user').forEach(function (el) { el.remove(); });
+    load().forEach(function (item, i) {
+      var g = grid(validCat(item.cat));
+      if (!g) return;
+      var d = document.createElement('div'); d.className = 'tile user';
+      d.innerHTML = mediaHtml(item.url) + '<button class="del" data-i="' + i + '" title="Remove">✕</button><div class="cap">Callan clip 🎬</div>';
+      g.insertBefore(d, g.firstChild);
+    });
+  }
+
+  // Optional Dropbox manifest (videos.json) — populated by the daily sync. Loads only when hosted online.
+  fetch('videos.json', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : []; }).then(function (list) {
+    (list || []).forEach(function (item) {
+      var g = grid(validCat(item.category || item.cat)); if (!g) return;
+      var d = document.createElement('div'); d.className = 'tile';
+      d.innerHTML = mediaHtml(item.url) + '<div class="cap">' + (item.caption || 'From Dropbox') + '</div>';
+      g.appendChild(d);
+    });
+  }).catch(function () {});
+
+  addUrl.addEventListener('click', function () {
+    var v = (urlInput.value || '').trim(); if (!v) { alert('Paste a video link first! 🔗'); return; }
+    var arr = load(); arr.push({ url: v, cat: validCat(catSel.value) }); save(arr); urlInput.value = ''; render();
+  });
+
+  fileInput.addEventListener('change', function () {
+    var cat = validCat(catSel.value);
+    Array.prototype.slice.call(fileInput.files).forEach(function (file) {
+      if (!/^video\//.test(file.type)) return;
+      var g = grid(cat); if (!g) return;
+      var d = document.createElement('div'); d.className = 'tile user';
+      var url = URL.createObjectURL(file);
+      d.innerHTML = '<video src="' + url + '" controls preload="metadata"></video><div class="cap">' + file.name.replace(/\.[^.]+$/, '') + ' (this visit) 🎬</div>';
+      g.insertBefore(d, g.firstChild);
+    });
+    fileInput.value = '';
+  });
+
+  document.querySelector('section.wrap').addEventListener('click', function (e) {
+    var btn = e.target.closest('.del'); if (!btn) return;
+    var arr = load(); arr.splice(parseInt(btn.getAttribute('data-i'), 10), 1); save(arr); render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
