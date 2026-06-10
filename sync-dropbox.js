@@ -18,6 +18,8 @@ function summary(md) {
   console.log(md.replace(/[#`*]/g, ''));
 }
 function fail(msg) {
+  var oneLine = msg.replace(/[`*#]/g, '').replace(/\s+/g, ' ').trim();
+  console.log('::error::Dropbox sync failed -- ' + oneLine);
   summary('\n## ❌ Dropbox sync failed\n\n' + msg + '\n');
   process.exit(1);
 }
